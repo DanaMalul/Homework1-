@@ -1,0 +1,161 @@
+public class Main {
+    public static void main(String[] args) {
+        int arr[] = {1, 5, 8, 12, 3, 7, 15};
+        String[] string_arr = {"aba", "xyzx", "12321", "pop"};
+        // Array for sum calculations
+        int sum_int_arr[] = {2, 1, 9, 4, 1};
+
+        // Example usage of findPeak
+        System.out.println("Index of the first peak: " + findPeak(arr));
+
+        // Example usage of ex12 with a regular for-loop to print the filtered array
+        int[] filteredArray = ex12(arr, 5, 12);
+        System.out.println("Filtered Array:");
+        for (int i = 0; i < filteredArray.length; i++) {
+            System.out.print(filteredArray[i] + " ");
+        }
+        System.out.println();
+
+        // Example usage of ex13 with a regular loop to print the first characters
+        char[] firstChars = ex13(string_arr);
+        System.out.println("First characters of strings:");
+        for (int i = 0; i < firstChars.length; i++) {
+            System.out.print(firstChars[i] + " ");
+        }
+        System.out.println();
+
+        // Example usage of ex15
+        System.out.println("Sum of elements based on values: " + ex15(sum_int_arr));
+        System.out.println("Sum of elements with flagging: " + ex15PartB(sum_int_arr));
+
+        // Example usage of findNthDiverseNumber
+        System.out.println("5th Diverse Number: " + findNthDiverseNumber(5));
+    }
+    /*
+     Function to return the elements in the array between n and m (inclusive)
+     input: The number array, n (lower bound), m (upper bound)
+     output: A new array containing elements between n and m
+     */
+    public static int[] ex12(int arr[], int n, int m) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] >= n && arr[i] <= m)
+                count++;
+
+        }
+
+        int[] result = new int[count];
+        int index = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] >= n && arr[i] <= m)
+                result[index++] = arr[i];
+
+        }
+
+        return result;
+    }
+
+    /*
+     Function to return the first character of each string in a string array
+     input: The string array
+     output: An array of characters where each is the first letter of the corresponding string
+     */
+    public static char[] ex13(String[] string_arr) {
+        char[] arr = new char[string_arr.length];
+        for (int i = 0; i < string_arr.length; i++)
+            arr[i] = string_arr[i].charAt(0);
+
+        return arr;
+    }
+
+    /*
+     Function to sum array elements using their value as an index
+     input: The integer array
+     output: The sum of the elements based on their value
+     */
+    public static int ex15(int[] sum_int_arr) {
+        int sum = 0;
+        for (int i = 0; i < sum_int_arr.length; i++) {
+            int value = sum_int_arr[i];
+            if (value >= 0 && value < sum_int_arr.length)
+                sum += sum_int_arr[value];
+
+        }
+
+        return sum;
+    }
+
+    /*
+     * ex15PartB: Same as ex15 but using a flag array to prevent adding the same element twice
+     */
+    public static int ex15PartB(int[] sum_int_arr) {
+        int sum = 0;
+        int[] arr_flag = new int[sum_int_arr.length];
+        for (int i = 0; i < sum_int_arr.length; i++) {
+            int value = sum_int_arr[i];
+            if (value >= 0 && value < sum_int_arr.length && arr_flag[value] != 1) {
+                arr_flag[value] = 1;
+                sum += sum_int_arr[value];
+            }
+        }
+        return sum;
+    }
+
+    /*
+     Function to check if a number is a diverse number
+     input: The number to check
+     output: True if the number is diverse  false if not
+     */
+    public static boolean isDiverseNumber(int n) {
+        boolean[] digits = new boolean[10];
+        while (n > 0) {
+            int digit = n % 10; // Get the last digit
+            if (digits[digit])
+                return false; // If the digit has already appeared, the number is not diverse
+
+            digits[digit] = true;
+            n /= 10; // Remove the last digit
+        }
+
+        return true;
+    }
+
+    /*
+     Function to find the n-th diverse number in the natural number sequence
+     input: The position of the diverse number to find
+     output: The n-th diverse number
+     */
+    public static int findNthDiverseNumber(int n) {
+        int count = 0;
+        int current = 0;
+
+        while (count < n) {
+            current++; // Move to the next natural number
+            if (isDiverseNumber(current))
+                count++;
+
+        }
+
+        return current;
+    }
+
+    /*
+     Function that finds the index of the first peak element in the array
+     input: The number array
+     output: The index of the first peak element
+     */
+    public static int findPeak(int arr[]) {
+        int max_i = 0;
+        int max_n = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max_n) {
+                max_n = arr[i];
+                max_i = i;
+            }
+        }
+
+        return max_i;
+    }
+}
