@@ -1,4 +1,4 @@
-public class Main {
+ public class Main {
     public static void main(String[] args) {
         int arr[] = {1, 5, 8, 12, 3, 7, 15}; 
         int exe_arr[] = {2, 4, 6, 10, 16}; 
@@ -147,19 +147,24 @@ public class Main {
      input: The position of the diverse number to find
      output: The n-th diverse number
      */
-    public static int findNthDiverseNumber(int n) {
-        int count = 0; 
-        int current = 0; 
-        
-        while (count < n) {
-            current++; // Move to the next natural number
-            if (isDiverseNumber(current)) 
-                count++; 
+     public static int findNthDiverseNumber(int n) {
             
+            int number = 0;  
+            int count = 0;    
+            
+            while(count != n) 
+            {
+                if(isDiverseNumber(number)) 
+                {
+                    count++; // Increment the count of found diverse numbers
+                }
+                number++; // Move to the next number in the sequence
+            }
+            
+            number -= 1; // After the loop, subtract 1 from number because the loop increments it one extra time
+            return number; 
+    
         }
-
-        return current; 
-    }
     /* function that find the length of the longest increasing sequence in the array
     input: the number array
     output:the length of the longest sequence
